@@ -40,7 +40,7 @@ const MobileNavbar = () => {
       <div className="flex-1 overflow-y-auto pb-24">
         {navItems[activeTab].component}
       </div>
-
+ 
       {/* Floating Bottom Navbar - Clean & Balanced */}
       <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 w-[97%] max-w-lg z-50">
         <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 px-3 py-2">

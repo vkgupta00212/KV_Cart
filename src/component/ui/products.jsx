@@ -28,7 +28,7 @@ const UsedProduct = () => {
     const fetchServicesWithImages = async () => {
       try {
         setIsLoading(true);
-        const products = await GetProduct("New");
+        const products = await GetProduct("New", service?.id);
 
         if (!products || products.length === 0) {
           setServices([]);
@@ -44,7 +44,7 @@ const UsedProduct = () => {
                 ...product,
                 imageUrl:
                   images.length > 0
-                    ? `https://api.hukmee.in/${images[0].productImage}`
+                    ? `https://ecommerce.anklegaming.live/${images[0].productImage}`
                     : spaImage,
               };
             } catch (err) {

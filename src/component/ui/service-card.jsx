@@ -129,7 +129,7 @@ const ServiceCardSection = ({ onServiceSelect }) => {
                 {serviceList.map((service) => (
                   <ServiceCard
                     key={service.id}
-                    icon={`https://api.hukmee.in/${service.ServiceImage}`}
+                    icon={`https://ecommerce.anklegaming.live/${service.ServiceImage}`}
                     label={service.ServiceName}
                     onClick={() => onServiceSelect(service)}
                   />

@@ -61,7 +61,7 @@ const ProductMainPage = () => {
         console.log("product id is like", product.ProID);
         console.log("Fetched Images", fetchedImages);
 
-        const baseUrl = "https://api.hukmee.in";
+        const baseUrl = "https://ecommerce.anklegaming.live/";
 
         if (Array.isArray(fetchedImages) && fetchedImages.length > 0) {
           const mapped = fetchedImages.map((img) =>
