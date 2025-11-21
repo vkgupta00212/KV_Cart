@@ -188,7 +188,7 @@ const PersonalDetails = () => {
   };
 
   const profileImageUrl = userDetails.Image
-    ? `https://api.hukmee.in/Images/${userDetails.Image}`
+    ? `https://ecommerce.anklegaming.live//Images/${userDetails.Image}`
     : "https://via.placeholder.com/150?text=Avatar";
 
   return (

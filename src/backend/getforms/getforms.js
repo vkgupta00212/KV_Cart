@@ -1,17 +1,19 @@
 import axios from "axios";
 
 class GetFormsModel {
-  constructor(id, formHeading, formDescription) {
+  constructor(id, formHeading, formDescription, type) {
     this.id = id;
     this.formHeading = formHeading;
     this.formDescription = formDescription;
+    this.type = type;
   }
 
   static fromJson(json) {
     return new GetFormsModel(
       json.id || "",
       json.FormHeading || "",
-      json.FormDescription || ""
+      json.FormDescription || "",
+      json.Type || ""
     );
   }
 }
@@ -20,6 +22,7 @@ const GetForms = async (formtype) => {
   const formData = new URLSearchParams();
   formData.append("token", "SWNCMPMSREMXAMCKALVAALI");
   formData.append("FormHeading", formtype);
+  formData.append("Type", "User");
 
   try {
     const response = await axios.post(

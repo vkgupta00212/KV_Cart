@@ -72,7 +72,7 @@ const MyOrder = () => {
           {/* Responsive Filter Tabs */}
           <div className="mt-4 flex justify-center">
             <div className="inline-flex bg-gray-50 rounded-xl shadow-inner p-4 overflow-x-auto scrollbar-hide gap-1">
-              {["All", "Pending", "Accepted", "Completed"].map((f) => (
+              {["Placed", "Cancelled", "Completed"].map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
@@ -238,39 +238,12 @@ const OrderCards = ({ orders, filter }) => {
 
                   <div className="flex justify-between">
                     <span className="text-gray-600 flex items-center gap-1">
-                      <Calendar size={12} /> Slot
-                    </span>
-                    <span className="font-medium">{order.Slot || "N/A"}</span>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 flex items-center gap-1">
-                      <Clock size={12} /> Slot Time
-                    </span>
-                    <span className="font-medium text-xs">
-                      {order.SlotDatetime
-                        ? formatDate(order.SlotDatetime)
-                        : "N/A"}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 flex items-center gap-1">
                       <Clock size={12} /> Ordered
                     </span>
                     <span className="font-medium text-xs">
                       {order.OrderDatetime
                         ? formatDate(order.OrderDatetime)
                         : "N/A"}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 flex items-center gap-1">
-                      <Clock size={12} /> OTP
-                    </span>
-                    <span className="font-medium text-xs">
-                      {order.OTP ? order.OTP : "N/A"}
                     </span>
                   </div>
                 </div>

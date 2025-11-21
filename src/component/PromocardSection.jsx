@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useKeenSlider } from "keen-slider/react";
+import { useNavigate } from "react-router-dom";
 import "keen-slider/keen-slider.min.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import spaImage from "../assets/women_sal.png";
 import ServicePromoCard from "./ui/promocard-section";
-import GetServicePack from "../backend/servicepack/getservicepack";
+import GetSuggestProduct from "../backend/specialforyou/getsuggestedproduct";
 
 const PromocardSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [maxSlide, setMaxSlide] = useState(0);
   const [services, setServices] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPopularServices = async () => {
-      const response = await GetServicePack("1", "Service");
+      const response = await GetSuggestProduct();
       setServices(response ?? []);
     };
     fetchPopularServices();
@@ -61,7 +63,7 @@ const PromocardSection = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 tracking-tight">
-              Explore Popular Services
+              Explore Popular Products
             </h2>
           </div>
           <div>No services available</div>
@@ -69,6 +71,10 @@ const PromocardSection = () => {
       </section>
     );
   }
+
+  const handleServiceClick = (service) => {
+    navigate("/productmainpage", { state: { subService: service } });
+  };
 
   return (
     <section
@@ -109,15 +115,16 @@ const PromocardSection = () => {
             {services.map((service, index) => (
               <div key={index} className="keen-slider__slide">
                 <ServicePromoCard
-                  title={service.servicename}
-                  subtitle={service.duration}
+                  title={service.ProductName}
+                  subtitle={`₹${service.Price}`} // FIXED
                   image={
-                    service.image
-                      ? service.image.startsWith("http")
-                        ? service.image
-                        : `https://api.hukmee.in/${service.image}`
+                    service.ProductImages
+                      ? service.ProductImages.startsWith("http")
+                        ? service.ProductImages
+                        : `https://ecommerce.anklegaming.live/${service.ProductImages}`
                       : spaImage
                   }
+                  onClickCard={() => handleServiceClick(service)} // FIXED
                 />
               </div>
             ))}

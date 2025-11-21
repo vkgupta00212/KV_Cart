@@ -324,37 +324,6 @@ const CartPage = () => {
           >
             Your Cart
           </h2>
-
-          {!hiddenCartBecauseReorder && (
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={() => setActiveTab("cart")}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium ${
-                  activeTab === "cart"
-                    ? `bg-gradient-to-r ${Colors.primaryFrom} ${Colors.primaryTo} text-white`
-                    : `bg-gray-100 text-gray-700`
-                }`}
-              >
-                Cart Items
-              </button>
-              <button
-                onClick={() => setActiveTab("reorder")}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium ${
-                  activeTab === "reorder"
-                    ? `bg-gradient-to-r ${Colors.primaryFrom} ${Colors.primaryTo} text-white`
-                    : `bg-gray-100 text-gray-700`
-                }`}
-              >
-                Reorder
-              </button>
-            </div>
-          )}
-
-          {hiddenCartBecauseReorder && (
-            <p className="mt-2 text-sm text-orange-600">
-              Vendor suggested changes are pending — editing the reorder only.
-            </p>
-          )}
         </div>
 
         {/* Cart Body */}
@@ -385,7 +354,7 @@ const CartPage = () => {
                 orders.map((item) => (
                   <div
                     key={item.ID}
-                    className={`flex justify-between items-start mb-4 pb-4 border-b ${Colors.divideGray}`}
+                    className={`flex justify-between items-start mt-4 mb-4 pb-4 border-b ${Colors.divideGray}`}
                   >
                     <div className="flex-grow pr-3">
                       <p

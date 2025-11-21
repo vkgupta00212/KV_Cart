@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Card, CardContent } from "./card";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +8,7 @@ import GetProductImage from "../../backend/getproduct/getproductimage";
 import { AlertCircle, ShoppingCart } from "lucide-react";
 import { FiSearch } from "react-icons/fi";
 import Colors from "../../core/constant";
+import GetOrder from "../../backend/order/getorderid";
 
 const UsedProduct = () => {
   const [services, setServices] = useState([]);
@@ -15,13 +16,38 @@ const UsedProduct = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartItems, setCartItems] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const { state } = useLocation();
   const service = state?.service;
 
+  const phone = localStorage.getItem("userPhone");
   const navigate = useNavigate();
 
-  console.log("service fetched in product", service);
+  const fetchCartItems = useCallback(async () => {
+    if (!phone) {
+      setCartItems([]);
+      return;
+    }
+
+    try {
+      const result = await GetOrder(phone, "Pending");
+
+      console.log("RAW CART API RESULT:", result);
+
+      setCartItems(Array.isArray(result) ? result : []);
+    } catch (err) {
+      console.error("Error fetching cart:", err);
+      setCartItems([]);
+    }
+  }, [phone]);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
+
+  const cartCount = cartItems.length;
+  console.log("Cart Count:", cartCount);
 
   // Fetch products
   useEffect(() => {
@@ -214,17 +240,18 @@ const UsedProduct = () => {
                 </div>
               </motion.div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/cartpage")}
-                className="flex items-center gap-1 text-gray-700 hover:text-orange-600 cursor-pointer"
-                aria-label="View cart"
-              >
-                <div className="p-2 border border-gray-400 rounded-full">
-                  <ShoppingCart size={18} />
-                </div>
-              </motion.div>
+              <div className="">
+                <button
+                  onClick={() => navigate("/cartpage")}
+                  className="m-[1px]-1 p-[10px] rounded-full border b "
+                >
+                  {isLoading ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <CartWithBadge count={cartCount} />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </header>
@@ -261,7 +288,7 @@ const UsedProduct = () => {
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <CartWithBadge count={2} />
+                <CartWithBadge count={cartCount} />
               )}
             </button>
           </div>
